@@ -883,11 +883,11 @@ def generate_v_header(hdu, inhead, params):
     # Find its sky coordinate
     wcs = WCS(inhead)
     if inhead['NAXIS'] == 4:
-        crval_ra = wcs.wcs_pix2sky([[cpix_ra_old, cpix_dec_old, 0, 0]], 0)[0][0]
-        crval_dec= wcs.wcs_pix2sky([[cpix_ra_old, cpix_dec_old, 0, 0]], 0)[0][1]
+        crval_ra = wcs.wcs_pix2world([[cpix_ra_old, cpix_dec_old, 0, 0]], 0)[0][0]
+        crval_dec= wcs.wcs_pix2world([[cpix_ra_old, cpix_dec_old, 0, 0]], 0)[0][1]
     if inhead['NAXIS'] == 3:
-        crval_ra = wcs.wcs_pix2sky([[cpix_ra_old, cpix_dec_old, 0]], 0)[0][0]
-        crval_dec= wcs.wcs_pix2sky([[cpix_ra_old, cpix_dec_old, 0]], 0)[0][1]
+        crval_ra = wcs.wcs_pix2world([[cpix_ra_old, cpix_dec_old, 0]], 0)[0][0]
+        crval_dec= wcs.wcs_pix2world([[cpix_ra_old, cpix_dec_old, 0]], 0)[0][1]
 
     hdu.header.set('NAXIS1', params.ra_lim[1] - params.ra_lim[0])
     hdu.header.set('CRVAL1', crval_ra)
@@ -934,11 +934,11 @@ def generate_header(hdu, inhead, params):
     # Find its sky coordinate
     wcs = WCS(inhead)
     if inhead['NAXIS'] == 4:
-        crval_ra = wcs.wcs_pix2sky([[cpix_ra_old, cpix_dec_old, 0, 0]], 0)[0][0]
-        crval_dec= wcs.wcs_pix2sky([[cpix_ra_old, cpix_dec_old, 0, 0]], 0)[0][1]
+        crval_ra = wcs.wcs_pix2world([[cpix_ra_old, cpix_dec_old, 0, 0]], 0)[0][0]
+        crval_dec= wcs.wcs_pix2world([[cpix_ra_old, cpix_dec_old, 0, 0]], 0)[0][1]
     if inhead['NAXIS'] == 3:
-        crval_ra = wcs.wcs_pix2sky([[cpix_ra_old, cpix_dec_old, 0]], 0)[0][0]
-        crval_dec= wcs.wcs_pix2sky([[cpix_ra_old, cpix_dec_old, 0]], 0)[0][1]
+        crval_ra = wcs.wcs_pix2world([[cpix_ra_old, cpix_dec_old, 0]], 0)[0][0]
+        crval_dec= wcs.wcs_pix2world([[cpix_ra_old, cpix_dec_old, 0]], 0)[0][1]
 
     hdu.header.set('CRVAL1', crval_ra)
     hdu.header.set('CRPIX1', cpix_ra)
