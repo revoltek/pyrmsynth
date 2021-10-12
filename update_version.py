@@ -15,15 +15,15 @@ import sys
 import os
 import datetime
 
-SRC_FILES = ['rmsynthesis.py', 'rm_tools/rm_tools.py', 'rm_tools/setup.py']
+SRC_FILES = ['rmsynthesis.py', 'lib_rm_tools/rm_tools.py', 'lib_rm_tools/setup.py']
 
 # These files should exist in ALL projects.
 STANDARD_FILES = ['README.md']
 
 vnum = sys.argv[1]
 
-print "Updating the following files to version " + vnum \
-    + ": " + ', '.join(SRC_FILES + STANDARD_FILES)
+print("Updating the following files to version " + vnum \
+    + ": " + ', '.join(SRC_FILES + STANDARD_FILES))
 
 for i in range(len(SRC_FILES)):
     os.rename(SRC_FILES[i], SRC_FILES[i] + '.bak')

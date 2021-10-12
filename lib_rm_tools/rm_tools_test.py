@@ -25,7 +25,7 @@ import sys
 import pylab
 import numpy
 
-import rm_tools as R
+from . import rm_tools as R
 
 # resolution in phi is about 40 rad/m/m with this frequency setup
 NBands = 16

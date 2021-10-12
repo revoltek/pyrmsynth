@@ -31,10 +31,10 @@ along with pyrmsynth.  If not, see <http://www.gnu.org/licenses/>.
 import numpy
 import math
 from sys import stdout
-import grid_tools as G
+from . import grid_tools as G
 #import pylab
 
-VERSION = '1.2.1'
+VERSION = '1.3.1'
 
 toplot = True
 
@@ -243,12 +243,12 @@ class RMSynth:
             weights4rmsf = G.sample_grid(self.l2_beam, l2_grid, w_grid)
 
         except TypeError:
-            print type(self.weights)
-            print len(self.weights)
-            print type(self.l2_nonuni)
-            print len(self.l2_nonuni)
-            print self.dphi
-            print self.nphi * 2.
+            print((type(self.weights)))
+            print((len(self.weights)))
+            print((type(self.l2_nonuni)))
+            print((len(self.l2_nonuni)))
+            print((self.dphi))
+            print((self.nphi * 2.))
             raise
 
         rmsf = numpy.fft.fftshift(numpy.fft.fft(weights4rmsf))

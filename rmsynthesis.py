@@ -39,13 +39,13 @@ import os
 import sys
 
 import numpy
-import pyfits
+from astropy.io import fits as pyfits
 import pylab
-from pywcs import WCS
+from astropy.wcs import WCS
 
-import rm_tools as R
+from lib_rm_tools import rm_tools as R
 
-VERSION = '1.3.0'
+VERSION = '1.3.1'
 
 
 class Params:
@@ -81,48 +81,48 @@ class Params:
     def __call__(self):
         """
         """
-        print 'RM Synthesis parameters:'
-        print '  Requested phi axis definition:'
-        print '    phi_min:         ', self.phi_min
-        print '    dphi:            ', self.dphi
-        print '    nphi:            ', self.nphi
+        print('RM Synthesis parameters:')
+        print('  Requested phi axis definition:')
+        print('    phi_min:         ', self.phi_min)
+        print('    dphi:            ', self.dphi)
+        print('    nphi:            ', self.nphi)
         
         if self.alphafromfile == False:
-            print '  Averaged spectral index provided:'
-            print '    alpha:           ', self.alpha
+            print('  Averaged spectral index provided:')
+            print('    alpha:           ', self.alpha)
             if self.ref_freq:
-                print '    ref_freq:        ', self.ref_freq
+                print('    ref_freq:        ', self.ref_freq)
             else:
-                print '    ref_freq:        '+'Set to mean center frequency.'
+                print('    ref_freq:        '+'Set to mean center frequency.')
         else: 
-            print '  Spectral index image provided:'
-            print '    from:           ', self.alpha
+            print('  Spectral index image provided:')
+            print('    from:           ', self.alpha)
             if self.ref_freq:
-                print '    ref_freq:        ', self.ref_freq
+                print('    ref_freq:        ', self.ref_freq)
             else:
-                print '    ref_freq:        '+'Set to mean center frequency.'
+                print('    ref_freq:        '+'Set to mean center frequency.')
         
         if self.imagemask == '':
-            print 'No image mask is specified. Will use all sky plane pixels\
-                in RM Synthesis'
+            print('No image mask is specified. Will use all sky plane pixels\
+                in RM Synthesis')
         else:
-            print 'Image mask specified. Will use pixels selected by mask '\
-                 + str(self.imagemask)
+            print('Image mask specified. Will use pixels selected by mask '\
+                 + str(self.imagemask))
                  
-        print '  Polarized intensity detection threshold: ', self.threshold        
+        print('  Polarized intensity detection threshold: ', self.threshold)        
         
         if self.do_clean:
-            print '  RM CLEAN enabled:'
-            print '    niter:           ', self.niter
-            print '    gain:            ', self.gain
-            print '    cutoff:          ', self.cutoff
+            print('  RM CLEAN enabled:')
+            print('    niter:           ', self.niter)
+            print('    gain:            ', self.gain)
+            print('    cutoff:          ', self.cutoff)
         else:
-            print 'RM CLEAN not enabled'
-        print '  Sky plane image limits:'
-        print '    ra_lim:          ', self.ra_lim
-        print '    dec_lim:         ', self.dec_lim
-        print '  Reading from directory: ', self.input_dir
-        print '  Writing to files starting with: ', self.outputfn
+            print('RM CLEAN not enabled')
+        print('  Sky plane image limits:')
+        print('    ra_lim:          ', self.ra_lim)
+        print('    dec_lim:         ', self.dec_lim)
+        print('  Reading from directory: ', self.input_dir)
+        print('  Writing to files starting with: ', self.outputfn)
 
     def __disp_vect(self, vect):
         """
@@ -184,8 +184,8 @@ def rmsynthesis(params, options, manual=False):
         raise ValueError(msg)
 
     if options.stokes_v and options.separate_stokes:
-        print "Stokes V output is not available when the Stokes images are " +\
-            "stored in separate files.  Turning Stokes V output off."
+        print("Stokes V output is not available when the Stokes images are " +\
+            "stored in separate files.  Turning Stokes V output off.")
         options.stokes_v = False
 
     # Gather the input file names from the directory in the parset
@@ -222,9 +222,9 @@ def rmsynthesis(params, options, manual=False):
             fns_q = os.listdir(params.input_dir + qsubdir)
             fns_u = os.listdir(params.input_dir + usubdir)
         except OSError:
-            print "No Stokes sub-directories found!  Please put the Stokes " +\
+            print("No Stokes sub-directories found!  Please put the Stokes " +\
                 "Q and Stokes U images into the stokes_q and stokes_u " + \
-                "subfolders of the input directory listed in the parset file."
+                "subfolders of the input directory listed in the parset file.")
             raise
 
         if len(fns_q) == 0 or len(fns_u) == 0:
@@ -346,11 +346,11 @@ def rmsynthesis(params, options, manual=False):
         params.weight = numpy.ones(len(params.nu))
 
     params()
-    print ' '
-    print '-----------------------'
-    print ' '
-    print 'Reading fits files into one big cube, ' +\
-        'converting Q & U to complex...'
+    print(' ')
+    print('-----------------------')
+    print(' ')
+    print('Reading fits files into one big cube, ' +\
+        'converting Q & U to complex...')
     progress(20, 0)
 
     if not options.separate_stokes:
@@ -516,14 +516,14 @@ def rmsynthesis(params, options, manual=False):
     res = 2. * math.sqrt(3) / delta_l2
     maxscale = numpy.pi / l2min
     
-    print "\n"
+    print("\n")
     
-    print "The maximum theroretical resolution for the given" +\
-        " set of parameters is " +str(round(res)) + " rad/m^2"
+    print("The maximum theroretical resolution for the given" +\
+        " set of parameters is " +str(round(res)) + " rad/m^2")
     
-    print "The maximum observable scale for the given set of parameters" +\
-        " is " +str(round(maxscale)) + " rad/m^2" 
-    print "\n"
+    print("The maximum observable scale for the given set of parameters" +\
+        " is " +str(round(maxscale)) + " rad/m^2") 
+    print("\n")
     
     # If requested, produce an array containing the spectral index information
     # and apply it
@@ -562,7 +562,7 @@ def rmsynthesis(params, options, manual=False):
         
     # initialize the RMSynth class that does all the work
     rms = R.RMSynth(params.nu, params.dnu, params.phi, params.weight)
-    print "Done!"
+    print("Done!")
 
     # Write out the RMSF to a text file
     rmsfout = numpy.zeros((len(rms.rmsf), 3))
@@ -572,14 +572,14 @@ def rmsynthesis(params, options, manual=False):
     numpy.savetxt(params.outputfn + '_rmsf.txt', rmsfout)
 
     if options.stokes_v:
-        print 'Writing Stokes V cube...'
+        print('Writing Stokes V cube...')
         hdu_v = pyfits.PrimaryHDU(vcube)
         try:
             generate_v_header(hdu_v, thead, params)
         except:
-            print "Warning: There was a problem generating the header, " + \
-                "no header information stored!"
-            print "Unexpected error:", sys.exc_info()[0]
+            print("Warning: There was a problem generating the header, " + \
+                "no header information stored!")
+            print("Unexpected error:", sys.exc_info()[0])
         hdu_v_list = pyfits.HDUList([hdu_v])
         hdu_v_list.writeto(params.outputfn + '_v.fits', clobber=True)
 
@@ -588,8 +588,8 @@ def rmsynthesis(params, options, manual=False):
         for i in range(len(fns) * nchan):
             Writer.writerow([str(params.nu[i]), fns[i / nchan]])
         f.close()
-        print 'Done!'
-        print 'Cleaning up Stokes V temp files...'
+        print('Done!')
+        print('Cleaning up Stokes V temp files...')
         del vcube
         os.remove(vcube_mmfn)
 
@@ -622,7 +622,7 @@ def rmsynthesis(params, options, manual=False):
             (len(params.phi), len(cube[0]), len(cube[0][0])),
             numpy.dtype('complex128'))
             
-    print 'Performing synthesis...'
+    print('Performing synthesis...')
     progress(20, 0)
 
     if params.do_clean:
@@ -661,17 +661,17 @@ def rmsynthesis(params, options, manual=False):
         progress(20, pcent)
 
     if params.do_clean:  
-        print '\n'  
-        print "The fitted FWHM of the clean beam is " +str(round(rmc.sdev,2)) + " rad/m^2"
-        print '\n'
+        print('\n')  
+        print("The fitted FWHM of the clean beam is " +str(round(rmc.sdev,2)) + " rad/m^2")
+        print('\n')
 
-    print 'RM synthesis done!  Writing out FITS files...'
+    print('RM synthesis done!  Writing out FITS files...')
     write_output_files(dicube, params, thead, 'di')
     if params.do_clean:
         write_output_files(rescube, params, thead, 'residual')
         write_output_files(cleancube, params, thead, 'clean')
         write_output_files(cccube, params, thead, 'cc')
-        print 'Writing out CC list...'
+        print('Writing out CC list...')
         write_output_files(cccube, params, thead, 'cc')
         # TODO: need to make this usable!
         #   it doesn't work right now because there are just way too many CCs
@@ -686,7 +686,7 @@ def rmsynthesis(params, options, manual=False):
             (decsz[1]-decsz[0], rasz[1]-rasz[0]), numpy.dtype('float64'))
     umap = create_memmap_file_and_array(umap_mmfn, \
             (decsz[1]-decsz[0], rasz[1]-rasz[0]), numpy.dtype('float64'))
-    print 'Computing polarized intensity and Faraday depth maps'
+    print('Computing polarized intensity and Faraday depth maps')
     for indx in range(decsz[1]-decsz[0]):
         for jndx in range(rasz[1]-rasz[0]):
             if maskimage[indx, jndx] != 0:
@@ -714,13 +714,13 @@ def rmsynthesis(params, options, manual=False):
                 qmap[indx, jndx] = numpy.nan
                 umap[indx, jndx] = numpy.nan
     
-    print 'Writing polarized intensity and Faraday depth maps'
+    print('Writing polarized intensity and Faraday depth maps')
     write_output_maps(polintmap, params, thead, 'polint')
     write_output_maps(phimap, params, thead, 'phi', 'rad/m/m')
     write_output_maps(qmap, params, thead, 'qmap')
     write_output_maps(umap, params, thead, 'umap')
 
-    print 'Cleaning up temp files...'
+    print('Cleaning up temp files...')
     del dicube
     del cube
     if params.do_clean:
@@ -737,7 +737,7 @@ def rmsynthesis(params, options, manual=False):
         os.remove(rescube_mmfn)
         os.remove(cccube_mmfn)
 
-    print 'Done!'
+    print('Done!')
 
 
 def write_cc_list(cclist, fn):
@@ -797,9 +797,9 @@ def write_output_maps(image, params, inhead, typename, bunit='JY/BEAM'):
         # set the appropriate unit for pixel values
         hdu.header['BUNIT'] = bunit
     except:
-        print "Warning: There was a problem generating the header, no " + \
-            "header information stored!"
-        print "Unexpected error:", sys.exc_info()[0]
+        print("Warning: There was a problem generating the header, no " + \
+            "header information stored!")
+        print("Unexpected error:", sys.exc_info()[0])
     try:
         # remove the 3rd axis
         hdu.header.__delitem__('CTYPE3')
@@ -822,9 +822,9 @@ def write_output_files(cube, params, inhead, typename):
     try:
         generate_header(hdu_q, inhead, params)
     except:
-        print "Warning: There was a problem generating the header, no " + \
-            "header information stored!"
-        print "Unexpected error:", sys.exc_info()[0]
+        print("Warning: There was a problem generating the header, no " + \
+            "header information stored!")
+        print("Unexpected error:", sys.exc_info()[0])
     hdu_q_list = pyfits.HDUList([hdu_q])
     hdu_q_list.writeto(params.outputfn + '_' + typename +  '_q.fits', clobber=True)
 
@@ -832,9 +832,9 @@ def write_output_files(cube, params, inhead, typename):
     try:
         generate_header(hdu_main, inhead, params)
     except:
-        print "Warning: There was a problem generating the header, no " + \
-            "header information stored!"
-        print "Unexpected error:", sys.exc_info()[0]
+        print("Warning: There was a problem generating the header, no " + \
+            "header information stored!")
+        print("Unexpected error:", sys.exc_info()[0])
     hdu_list = pyfits.HDUList([hdu_main])
     hdu_list.writeto(params.outputfn + '_' + typename + '_u.fits', clobber=True)
 
@@ -842,9 +842,9 @@ def write_output_files(cube, params, inhead, typename):
     try:
         generate_header(hdu_p, inhead, params)
     except:
-        print "Warning: There was a problem generating the header, no " + \
-            "header information stored!"
-        print "Unexpected error:", sys.exc_info()[0]
+        print("Warning: There was a problem generating the header, no " + \
+            "header information stored!")
+        print("Unexpected error:", sys.exc_info()[0])
     hdu_p_list = pyfits.HDUList([hdu_p])
     hdu_p_list.writeto(params.outputfn + '_' + typename + '_p.fits', clobber=True)
 
@@ -994,7 +994,7 @@ def create_memmap_file_and_array(fn, SHAPE, DTYPE):
         for i in range(len(SHAPE)):
             npix = npix * SHAPE[i]
 
-    with open(fn, 'wb') as f:
+    with open(fn, 'w') as f:
         # OPEN THE FILE, SKIP TO THE END, AND WRITE A 0
         # Quickly creates an empty file on disk.
         f.seek(npix * DTYPE.itemsize - 1)
@@ -1010,7 +1010,7 @@ def parse_input_file(infile):
 
     params = Params()
 
-    reader = csv.reader(open(infile, 'rb'), delimiter=" ",
+    reader = csv.reader(open(infile, 'r'), delimiter=" ",
                         skipinitialspace=True)
     parset = dict()
 
@@ -1060,7 +1060,7 @@ def parse_input_file(infile):
     
     if 'do_weight' in parset:
         params.weight = numpy.loadtxt(params.input_dir + parset['do_weight'])
-        print 'Non-trivial weights enabled! Loaded from ' + parset['do_weight']
+        print('Non-trivial weights enabled! Loaded from ' + parset['do_weight'])
 
     return params
 
@@ -1097,10 +1097,10 @@ if __name__ == '__main__':
     if len(args) != 1:
         parser.error("Incorrect number of arguments")
 
-    print "rmsynthesis.py ver. " + VERSION
-    print "Written by Michael Bell & Henrik Junklewitz"
-    print ""
-    print "Parsing parameter file..."
+    print("rmsynthesis.py ver. " + VERSION)
+    print("Written by Michael Bell & Henrik Junklewitz")
+    print("")
+    print("Parsing parameter file...")
     params = parse_input_file(args[0])
 
     rmsynthesis(params, options)

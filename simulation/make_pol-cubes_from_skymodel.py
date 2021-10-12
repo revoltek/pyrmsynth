@@ -82,7 +82,7 @@ ref_head.update('BUNIT','JY/BEAM')
 
 
 for i in range(nsb):
-    print "Working on subband",i,"out of",nsb
+    print("Working on subband",i,"out of",nsb)
     sbcube = np.zeros((4, nchan, ndec, nra))
     for j in range(nchan):
         for k in range(len(mdl)):
@@ -138,7 +138,7 @@ for i in range(nsb):
     del hdu_list
 
 if options.SPECMAP:
-    print "Working on spectral index map"
+    print("Working on spectral index map")
     specmap = np.zeros((1, 1, ndec, nra))
     for k in range(len(mdl)):
         specmap[0, 0, cdec + mdl[k][1], cra - mdl[k][2]] = mdl[k][7]

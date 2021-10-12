@@ -1,8 +1,14 @@
 `pyrmsynth` - Python based RM Synthesis code including RMCLEAN
 ==============================================================
 
-*Current version:* 1.3.0
-*Updated on:* 2015-06-22
+*Current version:* 1.3.1
+*Updated on:* 2021-10-12
+
+The original code is here: https://github.com/mrbell/pyrmsynth
+
+This is a python3 port.
+
+------------------------------------------------------------------------------
 
 `pyrmsynth` performs RM-synthesis, either simply by Fourier transformation 
 (to produce a dirty image) or using the RMCLEAN method as described by 

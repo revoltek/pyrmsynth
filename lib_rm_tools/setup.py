@@ -5,7 +5,7 @@ import numpy
 include_gsl_dir = "/usr/include/"
 lib_gsl_dir = "/usr/lib/"
 
-VERSION = '1.2.1'
+VERSION = '1.3.1'
 
 # python setup.py build_ext --inplace
 
