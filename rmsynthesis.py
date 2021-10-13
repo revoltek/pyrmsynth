@@ -695,7 +695,7 @@ def rmsynthesis(params, options, manual=False):
                     u_los = cleancube[:, indx, jndx].imag
                 else:
                     q_los = dicube[:, indx, jndx].real
-                    u_los = dicube[:, indx, jndx]. imag
+                    u_los = dicube[:, indx, jndx].imag
                 p_los = numpy.sqrt(numpy.add(numpy.square(q_los), numpy.square(u_los)))
                 if numpy.amax(p_los) > params.threshold:
                     polintmap[indx, jndx] = numpy.amax(p_los)
