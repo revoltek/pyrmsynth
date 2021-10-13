@@ -581,7 +581,7 @@ def rmsynthesis(params, options, manual=False):
                 "no header information stored!")
             print("Unexpected error:", sys.exc_info()[0])
         hdu_v_list = pyfits.HDUList([hdu_v])
-        hdu_v_list.writeto(params.outputfn + '_v.fits', clobber=True)
+        hdu_v_list.writeto(params.outputfn + '_v.fits', overwrite=True)
 
         f = open(params.outputfn + '_freqlist.txt', 'wb')
         Writer = csv.writer(f, delimiter=' ')
@@ -811,7 +811,7 @@ def write_output_maps(image, params, inhead, typename, bunit='JY/BEAM'):
         hdu.header.__delitem__('CUNIT3')
     except KeyError: pass
     hdu_list = pyfits.HDUList([hdu])
-    hdu_list.writeto(params.outputfn + '_' + typename + '.fits', clobber=True)
+    hdu_list.writeto(params.outputfn + '_' + typename + '.fits', overwrite=True)
 
 def write_output_files(cube, params, inhead, typename):
     """
@@ -826,7 +826,7 @@ def write_output_files(cube, params, inhead, typename):
             "header information stored!")
         print("Unexpected error:", sys.exc_info()[0])
     hdu_q_list = pyfits.HDUList([hdu_q])
-    hdu_q_list.writeto(params.outputfn + '_' + typename +  '_q.fits', clobber=True)
+    hdu_q_list.writeto(params.outputfn + '_' + typename +  '_q.fits', overwrite=True)
 
     hdu_main = pyfits.PrimaryHDU(cube.imag)
     try:
@@ -836,7 +836,7 @@ def write_output_files(cube, params, inhead, typename):
             "header information stored!")
         print("Unexpected error:", sys.exc_info()[0])
     hdu_list = pyfits.HDUList([hdu_main])
-    hdu_list.writeto(params.outputfn + '_' + typename + '_u.fits', clobber=True)
+    hdu_list.writeto(params.outputfn + '_' + typename + '_u.fits', overwrite=True)
 
     hdu_p = pyfits.PrimaryHDU(abs(cube))
     try:
@@ -846,7 +846,7 @@ def write_output_files(cube, params, inhead, typename):
             "header information stored!")
         print("Unexpected error:", sys.exc_info()[0])
     hdu_p_list = pyfits.HDUList([hdu_p])
-    hdu_p_list.writeto(params.outputfn + '_' + typename + '_p.fits', clobber=True)
+    hdu_p_list.writeto(params.outputfn + '_' + typename + '_p.fits', overwrite=True)
 
 
 def generate_v_header(hdu, inhead, params):
