@@ -701,7 +701,7 @@ def rmsynthesis(params, options, manual=False):
                     polintmap[indx, jndx] = numpy.amax(p_los)
                     indx_max_polint = numpy.argmax(p_los)
                     phimap[indx, jndx] = params.phi[indx_max_polint]
-                    print('Adding',indx,jndx,indx_max_polint,params.phi[indx_max_polint])
+                    #print('Adding',indx,jndx,indx_max_polint,params.phi[indx_max_polint])
                     qmap[indx, jndx] = q_los[indx_max_polint]
                     umap[indx, jndx] = u_los[indx_max_polint]
                 else:
