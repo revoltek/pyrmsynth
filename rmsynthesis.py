@@ -701,6 +701,7 @@ def rmsynthesis(params, options, manual=False):
                     polintmap[indx, jndx] = numpy.amax(p_los)
                     indx_max_polint = numpy.argmax(p_los)
                     phimap[indx, jndx] = params.phi[indx_max_polint]
+                    print('Adding',indx,jndx,indx_max_polint,params.phi[indx_max_polint])
                     qmap[indx, jndx] = q_los[indx_max_polint]
                     umap[indx, jndx] = u_los[indx_max_polint]
                 else:
@@ -1027,6 +1028,9 @@ def parse_input_file(infile):
     params.dphi = float(parset['dphi'])
     temp = numpy.arange(params.nphi)
     params.phi = params.phi_min + temp * params.dphi
+
+    if params.phi[0] != -1*params.phi[-1]:
+        print('WARNING: non symmetric phi range (%f, %f), this can cause problems' % (params.phi[0],params.phi[-1]))
     
     if 'imagemask' in parset:
         params.imagemask = parset['imagemask']

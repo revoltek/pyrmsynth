@@ -113,6 +113,10 @@ wiki (https://github.com/mrbell/pyrmsynth/wiki/Using-rmsynthesis.py).
 Any bugs and issues can be reported to the developers via the github issue
 tracker.
 
+- _di_p.fits, _di_q.fits, _di_u.fits should be the dirty RM cubes in P(phi), Q(Phi), U(Phi). Basically what is called the Faraday spectrum and its real and imaginary parts.
+
+- the rest of the output is a first VERY dumb version of diagnostic output maps, summarising the results in 2D maps. _polint.fits, _qmap.fits and _umap.fits are the maximum P(phi), Q(phi), U(phi) value per LOS in each pixel in the sky. _phi.fits gives the Faraday depth value of the maximum P(phi) per pixel in the sky.
+
 ------------------------------------------------------------------------------
 
 *Simulation tool*:
